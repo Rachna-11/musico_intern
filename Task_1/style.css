@@ -1,0 +1,110 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(270deg, #063233, #0f1313, #245a65);
+    background-size: 600% 600%;
+    animation: gradientAnimation 15s ease infinite;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.todo-container {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s;
+}
+
+.todo-container:hover {
+    transform: scale(1.02);
+}
+
+.todo-container h1 {
+    margin-bottom: 20px;
+    color: #ffffff;
+    text-shadow: 0 0 5px #39bcba72, 0 0 10px #39bcba;
+}
+
+#todo-input {
+    width: 65%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    margin-right: 10px;
+    font-size: 16px;
+    outline: none;
+    background-color: #333;
+    color: white;
+}
+
+#add-btn {
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #39bcba, #6296c1);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 0 10px #39bcba;
+    transition: all 0.3s ease;
+}
+
+#add-btn:hover {
+    background: linear-gradient(135deg, #8092a2, #39bcba86);
+    box-shadow: 0 0 0px #39bcba63, 0 0 40px #6296c1;
+    transform: scale(1.05);
+}
+
+#todo-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+#todo-list li {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#todo-list li:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px);
+}
+
+#todo-list li button {
+    background-color: #ff6b6b;
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 8px #ff6b6b;
+}
+
+#todo-list li button:hover {
+    background-color: #e53e3e;
+    box-shadow: 0 0 15px #e53e3e;
+    transform: scale(1.1);
+}

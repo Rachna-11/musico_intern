@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="todo-container">
+        <h1>Todo List</h1>
+        <input type="text" id="todo-input" placeholder="Add a new todo">
+        <button id="add-btn">Add</button>
+        <ul id="todo-list"></ul>
+    </div>
+
+</body>
+<script>
+    let todos = JSON.parse(localStorage.getItem('todos')) || [];
+
+    function Todos() {
+        const list = document.getElementById('todo-list');
+        list.innerHTML = '';
+        todos.forEach((todo, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `${todo.text} <button onclick="deleteTodo(${index})">Delete</button>`;
+            list.appendChild(li);
+        });
+    }
+
+    function addTodo() {
+        const input = document.getElementById('todo-input');
+        if (input.value.trim() !== '') {
+            todos.push({ text: input.value.trim() });
+            localStorage.setItem('todos', JSON.stringify(todos));
+            input.value = '';
+            Todos();
+        }
+    }
+
+    function deleteTodo(index) {
+        todos.splice(index, 1);
+        localStorage.setItem('todos', JSON.stringify(todos));
+        Todos();
+    }
+
+    document.getElementById('add-btn').addEventListener('click', addTodo);
+
+    Todos();
+
+</script>
+
+</html>
