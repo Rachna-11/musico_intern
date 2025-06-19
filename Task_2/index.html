@@ -1,45 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Birthday Countdown</title>
   <script src="https://cdn.tailwindcss.com"></script>
-<style>
-  body {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #40798e, #2b6456);
-    background-size: 400% 400%;
-    animation: gradientBG 8s ease infinite;
-  }
+  <style>
+    body {
+      background: linear-gradient(-45deg, #ee7752, #e73c7e, #40798e, #2b6456);
+      background-size: 400% 400%;
+      animation: gradientBG 8s ease infinite;
+    }
 
-  @keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-</style>
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
 
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+  </style>
 </head>
-<body class="text-white flex items-center justify-center min-h-screen flex-col">
 
-  <h1 class="text-5xl font-bold mb-8  ">🎉 Countdown to My Birthday 🎉</h1>
+<body class="text-white flex items-center justify-center min-h-screen flex-col p-4">
 
-  <div id="countdown" class="flex gap-12 shadow-red-400 text-3xl font-light perspective-500">
-    <div class="flex flex-col items-center  shadow-red-400 transform hover:rotate-x-12 hover:rotate-y-12 transition-transform duration-500 bg-white text-purple-900 p-6 rounded-xl shadow-2xl">
-      <span id="days" class="text-6xl font-semibold">00</span>  
-      <span>Days</span>
+  <h1 class="text-4xl sm:text-5xl font-bold mb-8 text-center">🎉 Countdown to My Birthday 🎉</h1>
+
+  <div id="countdown"
+    class="flex flex-wrap gap-6 sm:gap-12 justify-center perspective-500 w-full max-w-4xl">
+    <div
+      class="flex flex-col items-center transform hover:rotate-x-12 hover:rotate-y-12 transition-transform duration-500 bg-white text-purple-900 p-4 sm:p-6 rounded-xl shadow-2xl w-28 sm:w-40">
+      <span id="days" class="text-4xl sm:text-6xl font-semibold">00</span>
+      <span class="text-base sm:text-lg">Days</span>
     </div>
-    <div class="flex flex-col items-center  shadow-red-400 transform hover:rotate-x-12 hover:rotate-y-12 transition-transform duration-500 bg-white text-purple-900 p-6 rounded-xl shadow-2xl">
-      <span id="hours" class="text-6xl font-semibold">00</span>
-      <span>Hours</span>
+    <div
+      class="flex flex-col items-center transform hover:rotate-x-12 hover:rotate-y-12 transition-transform duration-500 bg-white text-purple-900 p-4 sm:p-6 rounded-xl shadow-2xl w-28 sm:w-40">
+      <span id="hours" class="text-4xl sm:text-6xl font-semibold">00</span>
+      <span class="text-base sm:text-lg">Hours</span>
     </div>
-    <div class="flex flex-col items-center  shadow-red-400 transform hover:rotate-x-12 hover:rotate-y-12 transition-transform duration-500 bg-white text-purple-900 p-6 rounded-xl shadow-2xl">
-      <span id="minutes" class="text-6xl font-semibold">00</span>
-      <span>Minutes</span>
+    <div
+      class="flex flex-col items-center transform hover:rotate-x-12 hover:rotate-y-12 transition-transform duration-500 bg-white text-purple-900 p-4 sm:p-6 rounded-xl shadow-2xl w-28 sm:w-40">
+      <span id="minutes" class="text-4xl sm:text-6xl font-semibold">00</span>
+      <span class="text-base sm:text-lg">Minutes</span>
     </div>
-    <div class="flex flex-col items-center  shadow-red-400 transform hover:rotate-x-12 hover:rotate-y-12 transition-transform duration-500 bg-white text-purple-900 p-6 rounded-xl shadow-2xl">
-      <span id="seconds" class="text-6xl font-semibold">00</span>
-      <span>Seconds</span>
+    <div
+      class="flex flex-col items-center transform hover:rotate-x-12 hover:rotate-y-12 transition-transform duration-500 bg-white text-purple-900 p-4 sm:p-6 rounded-xl shadow-2xl w-28 sm:w-40">
+      <span id="seconds" class="text-4xl sm:text-6xl font-semibold">00</span>
+      <span class="text-base sm:text-lg">Seconds</span>
     </div>
   </div>
 
@@ -75,4 +89,5 @@
   </script>
 
 </body>
+
 </html>
