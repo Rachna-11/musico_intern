@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Style Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="flex items-center justify-center min-h-screen bg-black p-4">
+    <div class="w-full max-w-sm border-2 border-y-red-100 rounded-md py-4 px-5">
+        <input type="text" id="display" class="w-full mb-4 p-4 text-right text-3xl  bg-gray-600 text-white rounded"
+            readonly>
+
+        <div class="grid grid-cols-4 gap-3">
+            <button class="btn-function" onclick="clearDisplay()">AC</button>
+            <button class="btn-function" onclick="appendValue('%')">%</button>
+            <button class="btn-function" onclick="deleteLast()">⌫</button>
+            <button class="btn-operator" onclick="appendValue('/')">÷</button>
+
+            <button class="btn" onclick="appendValue('7')">7</button>
+            <button class="btn" onclick="appendValue('8')">8</button>
+            <button class="btn" onclick="appendValue('9')">9</button>
+            <button class="btn-operator" onclick="appendValue('*')">×</button>
+
+            <button class="btn" onclick="appendValue('4')">4</button>
+            <button class="btn" onclick="appendValue('5')">5</button>
+            <button class="btn" onclick="appendValue('6')">6</button>
+            <button class="btn-operator" onclick="appendValue('-')">−</button>
+
+            <button class="btn" onclick="appendValue('1')">1</button>
+            <button class="btn" onclick="appendValue('2')">2</button>
+            <button class="btn" onclick="appendValue('3')">3</button>
+            <button class="btn-operator" onclick="appendValue('+')">+</button>
+
+            <button class="btn" onclick="appendValue('00')">00</button>
+            <button class="btn" onclick="appendValue('0')">0</button>
+            <button class="btn" onclick="appendValue('.')">.</button>
+            <button class="btn-equal" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script>
+        function appendValue(value) {
+            document.getElementById('display').value += value;
+        }
+
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        function deleteLast() {
+            let display = document.getElementById('display');
+            display.value = display.value.slice(0, -1);
+        }
+
+        function calculate() {
+            try {
+                document.getElementById('display').value = eval(document.getElementById('display').value);
+            } catch (error) {
+                document.getElementById('display').value = 'Error';
+            }
+        }
+    </script>
+
+    <style>
+        button {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .btn {
+            background-color: #333333;
+            color: white;
+        }
+
+        .btn:hover {
+            background-color: #4d4d4d;
+        }
+
+        .btn:active {
+            background-color: #666666;
+        }
+
+        .btn-function {
+            background-color: #a6a6a6;
+            color: black;
+        }
+
+        .btn-function:hover {
+            background-color: #bfbfbf;
+        }
+
+        .btn-function:active {
+            background-color: #d9d9d9;
+        }
+
+        .btn-operator {
+            background-color: #ff9f0a;
+            color: white;
+        }
+
+        .btn-operator:hover {
+            background-color: #ffb347;
+        }
+
+        .btn-operator:active {
+            background-color: #ffcc80;
+        }
+
+        .btn-equal {
+            background-color: #ff9f0a;
+            color: white;
+        }
+
+        .btn-equal:hover {
+            background-color: #ffb347;
+        }
+
+        .btn-equal:active {
+            background-color: #ffcc80;
+        }
+    </style>
+</body>
+
+</html>
