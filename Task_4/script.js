@@ -41,7 +41,6 @@ function MovieSearch() {
                 movieRating.classList.add("movieRating");
                 moviePlot.classList.add("moviePlot");
 
-                // Check if poster_path exists
                 if (e.poster_path) {
                     movieImg.setAttribute("src", `https://image.tmdb.org/t/p/w500${e.poster_path}`);
                 } else {
