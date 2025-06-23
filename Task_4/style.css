@@ -1,4 +1,3 @@
-/* Base Styles */
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
@@ -18,7 +17,6 @@ body {
     flex-direction: column;
 }
 
-/* Clapperboard Base */
 .board {
     width: 80px;
     height: 50px;
@@ -165,7 +163,6 @@ body {
     margin: 5px 0;
 }
 
-/* Responsive Media Queries */
 @media (max-width: 768px) {
     .movieCard {
         width: 45%;

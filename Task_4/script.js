@@ -53,12 +53,6 @@ function MovieSearch() {
                 movieRating.textContent = `Rating: ${e.vote_average || 'N/A'}`;
                 moviePlot.textContent = `Overview: ${e.overview || 'No overview available.'}`;
 
-                // movieImg.setAttribute("src", `https://image.tmdb.org/t/p/w500${e.poster_path}`);
-                // movieTitle.textContent = e.title;
-                // movieYear.textContent = `Release Date: ${e.release_date}`;
-                // movieRating.textContent = `Rating: ${e.vote_average}`;
-                // moviePlot.textContent = `Overview: ${e.overview}`;
-
                 movieCard.appendChild(movieImg);
                 movieCard.appendChild(movieTitle);
                 movieCard.appendChild(movieYear);
