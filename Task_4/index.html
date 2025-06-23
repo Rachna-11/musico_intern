@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="rotateLoader()">
+
+  
+      <div class="loader" id="loader">
+        <div class="clap"></div>
+        <div class="board"></div>
+    </div>
+
+
+    <div class="container" id="mainContent">
+        <h1>🎬 Movie Search</h1>
+
+        <div class="search-container">
+            <input type="text" id="MovieName" placeholder="Search for a movie..." onkeyup="MovieSearch()">
+            <button onclick="MovieSearch()">🔍</button>
+        </div>
+
+        <div id="loading" style="display: none;">Loading movies...</div>
+        <div class="movieContent" id="content"></div>
+    </div>
+
+</body>
+<script src="script.js"></script>
+</html>
