@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #000;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: rise 10s infinite ease-in;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .weather-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            text-align: center;
+            width: 350px;
+            color: #fff;
+            z-index: 10;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .weather-card input {
+            width: 80%;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            outline: none;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .weather-card button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            background: #fff;
+            color: #000;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .weather-card h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .weather-card h2 {
+            font-size: 20px;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .weather-icon {
+            width: 100px;
+            margin: 20px auto;
+        }
+
+        .weather-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .weather-details div {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bubble" style="left: 10%; animation-duration: 12s; width: 15px; height: 15px;"></div>
+    <div class="bubble" style="left: 30%; animation-duration: 8s; width: 25px; height: 25px;"></div>
+    <div class="bubble" style="left: 50%; animation-duration: 10s; width: 20px; height: 20px;"></div>
+    <div class="bubble" style="left: 70%; animation-duration: 7s; width: 30px; height: 30px;"></div>
+    <div class="bubble" style="left: 90%; animation-duration: 9s; width: 18px; height: 18px;"></div>
+
+    <div class="weather-card">
+        <input type="text" id="cityInput" placeholder="Enter City Name">
+        <button onclick="getWeather()">Search</button>
+
+        <h1 id="temperature">--°C</h1>
+        <h2 id="cityName">City Name</h2>
+        <img src="" alt="Weather Icon" class="weather-icon" id="weatherIcon">
+
+        <div class="weather-details">
+            <div>
+                <h3>Humidity</h3>
+                <p id="humidity">--%</p>
+            </div>
+            <div>
+                <h3>Wind</h3>
+                <p id="wind">-- km/h</p>
+            </div>
+        </div>
+    </div>
+3
+    <script>
+        const apiKey = 'b012eb625a954d00a3a175137250603';
+
+        async function getWeather(cityName) {
+            let city = cityName || document.getElementById('cityInput').value;
+
+            if (!city) {
+                alert('Please enter a city name');
+                return;
+            }
+
+            const url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                document.getElementById('temperature').innerText = `${data.current.temp_c}°C`;
+                document.getElementById('cityName').innerText = data.location.name;
+                document.getElementById('weatherIcon').src = `https:${data.current.condition.icon}`;
+                document.getElementById('humidity').innerText = `${data.current.humidity}%`;
+                document.getElementById('wind').innerText = `${data.current.wind_kph} km/h`;
+            } catch (error) {
+                alert('City not found. Please try again.');
+            }
+        }
+
+        window.onload = () => {
+            getWeather('Ahmedabad');
+        }
+    </script>
+
+</body>
+</html>
