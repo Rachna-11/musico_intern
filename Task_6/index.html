@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Password Generator</title>
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #0f0f0f;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.container {
+  background: #1a1a1a;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px #00ffc3;
+  max-width: 400px;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.output-box {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  background: #2a2a2a;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.output-box input {
+  background: transparent;
+  color: white;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 16px;
+}
+
+.output-box button {
+  background: #00ffc38f;
+  border: none;
+  color: #000;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.settings label {
+  display: block;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.generate {
+  background: #00ffc362;
+  color: white;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.generate:hover {
+  background: #00c29a;
+}
+@media (max-width: 500px) {
+  .container {
+    padding: 20px;
+    width: 90%;
+  }
+
+  .output-box {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .output-box input {
+    font-size: 14px;
+  }
+
+  .output-box button {
+    width: 100%;
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .generate {
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  .settings label {
+    font-size: 13px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Password Generator 🔐</h1>
+    
+    <div class="output-box">
+      <input type="text" id="password" readonly placeholder="Your password will appear here">
+      <button onclick="copyPassword()">📋</button>
+    </div>
+
+    <div class="settings">
+      <label>Password Length: 
+        <input type="number" id="length" min="4" max="32" value="12">
+      </label>
+
+      <label><input type="checkbox" id="uppercase" checked> Include Uppercase</label>
+      <label><input type="checkbox" id="lowercase" checked> Include Lowercase</label>
+      <label><input type="checkbox" id="numbers" checked> Include Numbers</label>
+      <label><input type="checkbox" id="symbols"> Include Symbols</label>
+    </div>
+
+    <button class="generate" onclick="generatePassword()">Generate Password</button>
+  </div>
+
+  <script>
+    function generatePassword() {
+  const length = document.getElementById('length').value;
+  const hasUpper = document.getElementById('uppercase').checked;
+  const hasLower = document.getElementById('lowercase').checked;
+  const hasNumber = document.getElementById('numbers').checked;
+  const hasSymbol = document.getElementById('symbols').checked;
+
+  const upperSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const lowerSet = 'abcdefghijklmnopqrstuvwxyz';
+  const numberSet = '0123456789';
+  const symbolSet = '!@#$%^&*()_+=-<>?/{}[]';
+
+  let allChars = '';
+  if (hasUpper) allChars += upperSet;
+  if (hasLower) allChars += lowerSet;
+  if (hasNumber) allChars += numberSet;
+  if (hasSymbol) allChars += symbolSet;
+
+  if (allChars === '') {
+    alert("Please select at least one character type.");
+    return;
+  }
+
+  let password = '';
+  for (let i = 0; i < length; i++) {
+    password += allChars[Math.floor(Math.random() * allChars.length)];
+  }
+
+  document.getElementById('password').value = password;
+}
+
+function copyPassword() {
+  const password = document.getElementById('password');
+  if (password.value !== '') {
+    password.select();
+    document.execCommand('copy');
+    alert('Password copied to clipboard!');
+  }
+}
+
+  </script>
+</body>
+</html>
