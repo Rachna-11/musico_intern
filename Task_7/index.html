@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Infinite Image Slider</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #000;
+    }
+
+    .slider {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .prev, .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.5);
+      border: none;
+      font-size: 30px;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 50%;
+      z-index: 10;
+      user-select: none;
+    }
+
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+    @media (max-width: 600px) {
+      .prev, .next {
+        font-size: 20px;
+        padding: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="slider">
+    <div class="slides">
+      <img src="image/6.jpg" class="slide" />
+
+      <img src="image/1.jpg" class="slide" />
+      <img src="image/2.jpg" class="slide" />
+      <img src="image/3.jpg" class="slide" />
+      <img src="image/4.jpg" class="slide" />
+      <img src="image/5.jpg" class="slide" />
+      <img src="image/6.jpg" class="slide" />
+
+      <img src="image/1.jpg" class="slide" />
+    </div>
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+
+  <script>
+    const slides = document.querySelector(".slides");
+    const slide = document.querySelectorAll(".slide");
+    const prev = document.querySelector(".prev");
+    const next = document.querySelector(".next");
+
+    let index = 1;
+    let slideWidth = slide[0].clientWidth;
+    slides.style.transform = `translateX(-${slideWidth * index}px)`;
+
+    window.addEventListener("resize", () => {
+      slideWidth = slide[0].clientWidth;
+      slides.style.transition = "none";
+      slides.style.transform = `translateX(-${slideWidth * index}px)`;
+    });
+
+    function moveToSlide(i) {
+      slides.style.transition = "transform 0.5s ease-in-out";
+      index = i;
+      slides.style.transform = `translateX(-${slideWidth * index}px)`;
+    }
+
+    next.addEventListener("click", () => {
+      if (index >= slide.length - 1) return;
+      moveToSlide(index + 1);
+      resetAutoPlay();
+    });
+
+    prev.addEventListener("click", () => {
+      if (index <= 0) return;
+      moveToSlide(index - 1);
+      resetAutoPlay();
+    });
+
+    slides.addEventListener("transitionend", () => {
+      if (index === slide.length - 1) {
+        slides.style.transition = "none";
+        index = 1;
+        slides.style.transform = `translateX(-${slideWidth * index}px)`;
+      }
+
+      if (index === 0) {
+        slides.style.transition = "none";
+        index = slide.length - 2;
+        slides.style.transform = `translateX(-${slideWidth * index}px)`;
+      }
+    });
+
+    let autoPlay = setInterval(() => {
+      if (index < slide.length - 1) {
+        moveToSlide(index + 1);
+      }
+    }, 3000);
+
+    function resetAutoPlay() {
+      clearInterval(autoPlay);
+      autoPlay = setInterval(() => {
+        if (index < slide.length - 1) {
+          moveToSlide(index + 1);
+        }
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
