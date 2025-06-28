@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).send('Only POST requests are allowed');
+    return res.status(405).send('Only POST requests allowed');
   }
 
   const { filename, textdata } = req.body;
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   try {
     const filePath = path.join('/tmp', `${filename}.txt`);
     await writeFile(filePath, textdata, 'utf8');
-    res.status(200).send(`File created at: ${filePath}`);
+    res.status(200).send(`✅ File "${filename}.txt" created in /tmp (temp-only in Vercel).`);
   } catch (err) {
     console.error(err);
     res.status(500).send('Error writing file');
