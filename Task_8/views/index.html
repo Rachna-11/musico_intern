@@ -1,16 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Create File</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 40px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    label, input, textarea, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    input, textarea {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #response {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
   <h1>Create a File</h1>
   <form id="fileForm">
-    <label>File Name:</label><br>
-    <input type="text" id="filename" required><br><br>
-    <label>Text:</label><br>
-    <textarea id="textdata" rows="8" cols="40" required></textarea><br><br>
+    <label for="filename">File Name:</label>
+    <input type="text" id="filename" required>
+
+    <label for="textdata">Text:</label>
+    <textarea id="textdata" rows="6" required></textarea>
+
     <button type="submit">Submit</button>
   </form>
   <p id="response"></p>
@@ -21,7 +56,7 @@
       const filename = document.getElementById('filename').value;
       const textdata = document.getElementById('textdata').value;
 
-      const res = await fetch('/api/create-file', {
+      const res = await fetch('/create-file', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ filename, textdata })
