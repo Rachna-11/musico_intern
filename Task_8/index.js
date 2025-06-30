@@ -4,16 +4,13 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve the HTML form
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
-// Handle POST request to create file
 app.post('/create-file', (req, res) => {
   const { filename, textdata } = req.body;
 
@@ -33,7 +30,6 @@ app.post('/create-file', (req, res) => {
   });
 });
 
-// Start the server
 app.listen(PORT, () => {
   console.log(`🚀 Server is running at http://localhost:${PORT}`);
 });
