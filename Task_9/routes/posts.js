@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 
-// CREATE
 router.post('/', async (req, res) => {
   try {
     const post = new Post(req.body);
@@ -13,7 +12,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// READ ALL
 router.get('/', async (req, res) => {
   try {
     const posts = await Post.find().sort({ createdAt: -1 });
@@ -23,7 +21,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// READ SINGLE
 router.get('/:id', async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -33,8 +30,23 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+// PATCH (Update specific fields)
+router.patch('/:id', async (req, res) => {
+  try {
+    const updatedPost = await Post.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true, runValidators: true }
+    );
 
-// UPDATE
+    if (!updatedPost) return res.status(404).json({ error: 'Post not found' });
+
+    res.json(updatedPost);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 router.put('/:id', async (req, res) => {
   try {
     const updatedPost = await Post.findByIdAndUpdate(
@@ -49,7 +61,6 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE
 router.delete('/:id', async (req, res) => {
   try {
     const deletedPost = await Post.findByIdAndDelete(req.params.id);
