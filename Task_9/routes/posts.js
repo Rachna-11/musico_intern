@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 
-// Create a blog post
+    
 router.post('/', async (req, res) => {
   try {
+    console.log('Request Body:', req.body); 
     const post = new Post(req.body);
     const savedPost = await post.save();
     res.status(201).json(savedPost);
@@ -13,7 +14,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Get all blog posts
 router.get('/', async (req, res) => {
   try {
     const posts = await Post.find().sort({ createdAt: -1 });
