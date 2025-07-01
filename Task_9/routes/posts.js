@@ -30,7 +30,6 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-// PATCH (Update specific fields)
 router.patch('/:id', async (req, res) => {
   try {
     const updatedPost = await Post.findByIdAndUpdate(
