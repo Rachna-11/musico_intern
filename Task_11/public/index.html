@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Real-Time Chat App</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #ece5dd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .chat-container {
+      width: 100%;
+      max-width: 400px;
+      height: 100vh;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      border-radius: 0;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    #room-form {
+      background: #075e54;
+      padding: 10px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    #room-form input {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      flex: 1;
+      min-width: 0;
+      color: #333;
+    }
+
+    #room-form button {
+      padding: 10px;
+      background: #25d366;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    #room-name {
+      background: #075e54;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      list-style: none;
+      margin: 0;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: #e5ddd5;
+    }
+
+    #messages li {
+      max-width: 75%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      position: relative;
+      word-wrap: break-word;
+    }
+
+    .message-left {
+      align-self: flex-start;
+      background: #ffffff;
+      border-radius: 10px 10px 10px 0;
+      color: #333;
+    }
+
+    .message-right {
+      align-self: flex-end;
+      background: #dcf8c6;
+      border-radius: 10px 10px 0 10px;
+      color: #000;
+    }
+
+    .private-message {
+      border: 1px dashed #888;
+      font-style: italic;
+    }
+
+    form {
+      display: flex;
+      padding: 10px;
+      background: #f0f0f0;
+      gap: 10px;
+    }
+
+    form input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 20px;
+    }
+
+    form button {
+      padding: 10px 15px;
+      background-color: #128c7e;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    #private-form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px;
+      background: #f8f8f8;
+    }
+
+    #private-form input {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div id="room-form">
+      <input id="username" placeholder="Your name" />
+      <input id="room" placeholder="Room name" />
+      <button onclick="joinRoom()">Join</button>
+    </div>
+
+    <h2 id="room-name" style="display: none;">Room: </h2>
+
+    <ul id="messages"></ul>
+
+    <form id="form" style="display: none;">
+      <input id="input" autocomplete="off" placeholder="Type message..." />
+      <button>Send</button>
+    </form>
+
+    <form id="private-form" style="display: none;">
+      <input id="recipient" placeholder="To: Username" />
+      <input id="privateInput" placeholder="Your private message" />
+      <button>Send</button>
+    </form>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    let username = '';
+    let room = '';
+
+    const messages = document.getElementById('messages');
+    const roomHeading = document.getElementById('room-name');
+    const roomForm = document.getElementById('room-form');
+    const publicForm = document.getElementById('form');
+    const privateForm = document.getElementById('private-form');
+
+    function joinRoom() {
+      username = document.getElementById('username').value.trim();
+      room = document.getElementById('room').value.trim();
+      if (!username || !room) return alert('Please enter your name and room.');
+
+      socket.emit('join', { username, room });
+
+      roomHeading.textContent = `Room: ${room}`;
+      roomHeading.style.display = 'block';
+      roomForm.style.display = 'none';
+      publicForm.style.display = 'flex';
+      privateForm.style.display = 'flex';
+    }
+
+    socket.on('chat message', ({ username: sender, text }) => {
+      const item = document.createElement('li');
+      item.textContent = `${sender}: ${text}`;
+      item.className = sender === username ? 'message-right' : 'message-left';
+      messages.appendChild(item);
+      messages.scrollTop = messages.scrollHeight;
+    });
+
+    socket.on('message', (msg) => {
+      const item = document.createElement('li');
+      item.textContent = msg;
+      item.className = 'message-left';
+      messages.appendChild(item);
+      messages.scrollTop = messages.scrollHeight;
+    });
+
+    socket.on('private message', ({ from, text }) => {
+      const item = document.createElement('li');
+      item.innerHTML = `<strong>${from} (private):</strong> ${text}`;
+      item.className = 'message-left private-message';
+      messages.appendChild(item);
+      messages.scrollTop = messages.scrollHeight;
+    });
+
+    publicForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = document.getElementById('input');
+      const msg = input.value.trim();
+      if (msg) {
+        socket.emit('chat message', msg);
+        input.value = '';
+      }
+    });
+
+    privateForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const to = document.getElementById('recipient').value.trim();
+      const msg = document.getElementById('privateInput').value.trim();
+      if (to && msg) {
+        socket.emit('private message', { to, msg });
+
+        const item = document.createElement('li');
+        item.innerHTML = `<strong>You → ${to}:</strong> ${msg}`;
+        item.className = 'message-right private-message';
+        messages.appendChild(item);
+        messages.scrollTop = messages.scrollHeight;
+
+        document.getElementById('privateInput').value = '';
+      }
+    });
+  </script>
+</body>
+</html>
