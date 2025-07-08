@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎙️ Real Voice App</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #353b40, #23465c);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      padding: 30px 25px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      animation: fadeIn 0.6s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      margin-bottom: 25px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #startRecord {
+      background: #28a745;
+    }
+
+    #startRecord:hover {
+      background: #218838;
+    }
+
+    #stopRecord {
+      background: #dc3545;
+    }
+
+    #stopRecord:hover {
+      background: #c82333;
+    }
+
+    #timer {
+      font-weight: bold;
+      color: #007bff;
+      font-size: 16px;
+      flex-basis: 100%;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    h3 {
+      margin-top: 30px;
+      color: #444;
+      font-size: 18px;
+      border-bottom: 2px dashed #e0e0e0;
+      padding-bottom: 5px;
+    }
+
+    #recordingsList {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #recordingsList li {
+      background: #f7f9fc;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 14px;
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 20px;
+      }
+
+      button {
+        font-size: 13px;
+        padding: 10px;
+      }
+
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎙️ Real Voice App</h1>
+
+    <div class="controls">
+      <button id="startRecord">Start</button>
+      <button id="stopRecord" disabled>Stop</button>
+      <span id="timer">0s</span>
+    </div>
+
+    <h3>Recordings</h3>
+    <ul id="recordingsList"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

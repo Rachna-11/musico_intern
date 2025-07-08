@@ -8,26 +8,21 @@ const io = new Server(server);
 
 app.use(express.static('public'));
 
-// Store connected users: { socketId: { username, room } }
 const users = {};
 
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
 
-  // When a client joins the room
   socket.on('join', ({ username, room }) => {
-    // Save user info for this connection
+
     users[socket.id] = { username, room };
     socket.join(room);
 
-    // Send welcome message to the user who joined
     socket.emit('message', `Welcome ${username} to room ${room}!`);
 
-    // Notify other users in the room that a new user joined
     socket.to(room).emit('message', `${username} has joined the room.`);
   });
 
-  // Room messages: send to everyone in the room
   socket.on('chat message', (msg) => {
     const user = users[socket.id];
     if (user && user.room) {
@@ -35,7 +30,6 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Private messaging: find a user by their username
   socket.on('private message', ({ to, msg }) => {
     const targetSocketId = Object.keys(users).find(
       (id) => users[id].username === to
@@ -45,7 +39,6 @@ io.on('connection', (socket) => {
     }
   });
 
-  // On disconnect, notify the room and clean up
   socket.on('disconnect', () => {
     const user = users[socket.id];
     if (user) {
