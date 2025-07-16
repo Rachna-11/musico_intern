@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Google Login</title>
-</head>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -55,16 +56,19 @@
       }
     }
   </style>
+</head>
 <body>
-  <% if (user) { %>
-    <h2>Welcome, <%= user.displayName %>!</h2>
-    <p>Email: <%= user.emails[0].value %></p>
-    <img src="<%= user.photos[0].value %>" alt="Profile Photo" width="100">
-    <br><br>
-    <a href="/logout">Logout</a>
-  <% } else { %>
-    <h2>Please log in</h2>
-    <a href="/auth/google">Login with Google</a>
-  <% } %>
+  <div class="container">
+    <% if (user) { %>
+      <h2>Welcome, <%= user.displayName %>!</h2>
+      <p>Email: <%= user.emails[0].value %></p>
+      <img src="<%= user.photos[0].value %>" alt="Profile Photo" width="100">
+      <br>
+      <a href="/logout">Logout</a>
+    <% } else { %>
+      <h2>Please log in</h2>
+      <a href="/auth/google">Login with Google</a>
+    <% } %>
+  </div>
 </body>
 </html>
